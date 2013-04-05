@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+fred:
+  name: Fred
+
+barney:
+  name: Barney
+
+wilma:
+  name: Wilma

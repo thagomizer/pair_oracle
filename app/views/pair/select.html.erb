@@ -1,0 +1,19 @@
+<h1>Select the people available for pairing</h1>
+
+<%= form_tag "generate" do %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+
+    <% @people.each do |person| %>
+    <tr>
+      <td><%= person.name %></td>
+      <td><%= check_box_tag "people[ids][]", person.id, false -%></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= submit_tag "Generate Pairs" -%>
+<% end -%>

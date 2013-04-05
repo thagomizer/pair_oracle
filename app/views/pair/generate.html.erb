@@ -1,0 +1,19 @@
+<h1>Pairs</h1>
+
+<table>
+  <tr>
+    <th>Pairs</th>
+    <th></th>
+  </tr>
+
+  <% @pairs.each do |pair| %>
+  <tr>
+    <%= form_tag "save" %>
+      <%= hidden_field_tag "pairs", pair.map { |p| p.map(&:id) }.to_json -%>
+      <td><%= pair.map { |ary| ary.map(&:name).join(" & ") }.join(", ") %></td>
+      <td><%= submit_tag "Use" -%></td> 
+  </tr>
+  <% end %>
+</table>
+
+
