@@ -1,6 +1,9 @@
 PairOracle::Application.routes.draw do
   resources :people
 
+  match 'pair/select'   => 'pair#select'
+  match 'pair/generate' => 'pair#generate'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
