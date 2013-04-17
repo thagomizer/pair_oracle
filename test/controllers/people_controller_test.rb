@@ -1,8 +1,7 @@
 require "test_helper"
 
 class PeopleControllerTest < ActionController::TestCase
-
-  before do
+  def setup
     @person = people(:fred)
   end
 
@@ -19,7 +18,7 @@ class PeopleControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Person.count') do
-      post :create, :person => { :name => @person.name  }
+      post :create, :person => { :name => @person.name }
     end
 
     assert_redirected_to person_path(assigns(:person))
