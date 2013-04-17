@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-PairOracle::Application.config.secret_token = 'e60ea245b5d6f7cab2a5c63f0e69c409ac53c3e345d2e1b15077b0f7f2c1d98cb83ac32ada021d652205c64768bbabed8861c3ed39178d7b1d78858952df8fb9'
+PairOracle::Application.config.secret_token = '436f8a46de06a182fd678ff40d3fc0d5cba55d544fe3a4ce8077caf7f7d705970d0bdf2e0ace9f3e964256c9d25c5a1f0258303b0ecfcaec45d95fda4ce4fc7a'
