@@ -56,12 +56,38 @@ class PairGroupTest < ActiveSupport::TestCase
   end
 
   def test_to_a
-    pair_1 = Pair.make_pair(@fred, @barney)
-    pair_2 = Pair.make_pair(@wilma)
-    pair_group = PairGroup.new
-    pair_group.pairs << pair_1
-    pair_group.pairs << pair_2
+    pair_group = PairGroup.from_ids([@fred, @barney, @wilma].map(&:id))
 
     assert_equal [@fred, @barney, @wilma].sort, pair_group.to_a.sort
+  end
+
+  def test_from_ids
+    pg = PairGroup.from_ids([@fred, @barney, @wilma].map(&:id))
+
+    assert_equal 2, pg.pairs.length
+    p1 = pg.pairs[0]
+    p2 = pg.pairs[1]
+
+    assert_equal @fred, p1.person_1
+    assert_equal @barney, p1.person_2
+    assert_equal @wilma, p2.person_1
+    assert_nil p2.person_2
+  end
+
+  def test_save
+    pg = PairGroup.from_ids([@fred, @barney, @wilma].map(&:id))
+
+    assert_difference 'Pair.count', 2 do
+      pg.save
+    end
+
+    last_id = Pair.last.id
+    pair_2 = Pair.find(last_id)
+    pair_1 = Pair.find(last_id - 1)
+
+    assert_equal @fred, pair_1.person_1
+    assert_equal @barney, pair_1.person_2
+    assert_equal @wilma, pair_2.person_1
+    assert_nil pair_2.person_2
   end
 end

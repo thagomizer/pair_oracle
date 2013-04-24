@@ -3,6 +3,7 @@ PairOracle::Application.routes.draw do
 
   match 'pair/select'   => 'pair#select'
   match 'pair/generate' => 'pair#generate'
+  match 'pair/save' => 'pair#save'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

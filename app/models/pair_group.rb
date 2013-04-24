@@ -16,6 +16,18 @@ class PairGroup
     self.pairs.map(&:to_a).flatten.compact
   end
 
+  def save
+    self.pairs.map(&:save).all?
+  end
+
+  def self.from_ids(ids)
+    pg = PairGroup.new
+
+    people = ids.map { |id| Person.find(id) }
+    pg.pairs = people.each_slice(2).map { |p1, p2| Pair.make_pair(p1, p2) }
+    pg
+  end
+
   def self.generate(people)
     people.sort!
 
