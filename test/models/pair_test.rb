@@ -31,26 +31,19 @@ class PairTest < ActiveSupport::TestCase
     assert_equal @wilma, Person.find(@wilma.id)
   end
 
-  def test_generate_when_passed_only_one_id
-    pairs = Pair.generate([@wilma.id])
+  def test_to_a
+    pair = Pair.new(:person_1 => @wilma, :person_2 => @fred)
 
-    assert_equal [[[@wilma]]], pairs
+    assert_equal [pair.person_1, pair.person_2], pair.to_a
   end
 
-  def test_generate_returns_users_ordered_by_id
-    pairs = Pair.generate([@fred.id, @wilma.id])
+  def test_make_pair
+    result = Pair.make_pair(@wilma, @fred)
 
-    assert_equal [[[@wilma, @fred]]], pairs
-  end
+    assert_equal Pair.new(:person_1 => @wilma, :person_2 => @fred), result
 
-  def test_generate_when_passed_three_ids
-    pairs = Pair.generate([@fred, @wilma, @barney].map(&:id))
+    result = Pair.make_pair(@wilma)
 
-    expected = [[[@wilma, @fred], [@barney]],
-                [[@barney, @fred], [@wilma]],
-                [[@wilma, @barney], [@fred]]]
-
-    assert_equal expected.length, pairs.length
-    assert_equal expected, pairs
+    assert_equal Pair.new(:person_1 => @wilma), result
   end
 end

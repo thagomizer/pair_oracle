@@ -26,15 +26,15 @@ class PairControllerTest < ActionController::TestCase
     assert_select "input[type='submit']"
   end
 
-  def test_post_generate
-    post :generate, "people" => {"ids" => [@wilma, @fred, @barney]}
+  # def test_post_generate
+  #   post :generate, "people" => {"ids" => [@wilma, @fred, @barney]}
 
-    assert_equal 3, assigns(:pairs).length
+  #   assert_equal 3, assigns(:pairs).length
 
-    body = response.body
+  #   body = response.body
 
-    # assert body.include?("Fred & Barney, Wilma")
-    # assert body.include?("Fred & Wilma, Barney")
-    # assert body.include?("Barney & Wilma, Fred")
-  end
+  #   # assert body.include?("Fred & Barney, Wilma")
+  #   # assert body.include?("Fred & Wilma, Barney")
+  #   # assert body.include?("Barney & Wilma, Fred")
+  # end
 end
