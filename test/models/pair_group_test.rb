@@ -8,39 +8,60 @@ class PairGroupTest < ActiveSupport::TestCase
   end
 
   def test_generate_one_person
-    expected_pair = Pair.new(:person_1 => @wilma)
-    pair_sets = PairGroup.generate([@wilma])
-    pair_set = pair_sets.first
-    pair = pair_set.first
+    expected_pair = Pair.make_pair(@wilma)
+    pair_groups = PairGroup.generate([@wilma])
+    pair_group = pair_groups.first
+    pair = pair_group.pairs.first
 
-    assert_equal 1, pair_sets.length
-    assert_equal 1, pair_set.length
+    assert_equal 1, pair_groups.length
     assert_equal expected_pair.person_1, pair.person_1
+    assert_nil pair.person_2
   end
 
   def test_generate_two_people
-    expected_pair = Pair.new(:person_1 => @barney, :person_2 => @fred)
-    pair_sets = PairGroup.generate([@fred, @barney])
-    pair_set = pair_sets.first
-    pair = pair_set.first
+    expected_pair = Pair.make_pair(@barney, @fred)
+    pair_groups = PairGroup.generate([@fred, @barney])
+    pair_group = pair_groups.first
+    pair = pair_group.pairs.first
 
-    assert_equal 1, pair_sets.length
-    assert_equal 1, pair_set.length
+    assert_equal 1, pair_groups.length
     assert_equal expected_pair.person_1, pair.person_1
     assert_equal expected_pair.person_2, pair.person_2
   end
 
   def test_generate_three_people
-    pair_sets = PairGroup.generate([@fred, @barney, @wilma])
+    pair_groups = PairGroup.generate([@fred, @barney, @wilma])
 
-    assert_equal 3, pair_sets.length
-    pair_sets.each do |pair_set|
-      assert_equal 2, pair_set.length
+    assert_equal 3, pair_groups.length
+    pair_groups.each do |pair_group|
+      assert_equal 2, pair_group.pairs.length
 
-      folks = pair_set.map { |pair| [pair.person_1, pair.person_2]}.flatten
+      folks = pair_group.to_a
       assert_includes folks, @fred
       assert_includes folks, @barney
       assert_includes folks, @wilma
     end
+  end
+
+  def test_to_s
+    pair_1 = Pair.make_pair(@fred, @barney)
+    pair_2 = Pair.make_pair(@wilma)
+    pair_group = PairGroup.new
+    pair_group.pairs << pair_1
+    pair_group.pairs << pair_2
+
+    expected_str = "Fred & Barney, Wilma"
+
+    assert_equal expected_str, pair_group.to_s
+  end
+
+  def test_to_a
+    pair_1 = Pair.make_pair(@fred, @barney)
+    pair_2 = Pair.make_pair(@wilma)
+    pair_group = PairGroup.new
+    pair_group.pairs << pair_1
+    pair_group.pairs << pair_2
+
+    assert_equal [@fred, @barney, @wilma].sort, pair_group.to_a.sort
   end
 end

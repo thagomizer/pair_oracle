@@ -46,4 +46,16 @@ class PairTest < ActiveSupport::TestCase
 
     assert_equal Pair.new(:person_1 => @wilma), result
   end
+
+  def test_to_s_two_people
+    p = Pair.make_pair(@wilma, @fred)
+
+    assert_equal "Wilma & Fred", p.to_s
+  end
+
+  def test_to_s_one_person
+    p = Pair.make_pair(@wilma)
+
+    assert_equal "Wilma", p.to_s
+  end
 end

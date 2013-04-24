@@ -10,6 +10,11 @@ class Pair < ActiveRecord::Base
     [self.person_1, self.person_2]
   end
 
+  def to_s
+    return "#{self.person_1.name} & #{self.person_2.name}" if person_2
+    "#{self.person_1.name}"
+  end
+
   def ==(other_pair)
     (self.person_1 == other_pair.person_1) && (self.person_2 == other_pair.person_2)
   end
@@ -17,20 +22,4 @@ class Pair < ActiveRecord::Base
   def self.make_pair(person_1, person_2 = nil)
     Pair.new(:person_1 => person_1, :person_2 => person_2)
   end
-
-  # def self.generate(ids)
-  #   people = ids.map { |id| Person.find(id) }
-
-  #   return [people.sort] if people.length < 3
-
-  #   pairs = []
-  #   people.combination(2).each do |pair|
-  #     pair.sort!
-  #     others = self.generate(people - pair)
-  #     others.each do |rest|
-  #       pairs << ([pair] + rest)
-  #     end
-  #   end
-  #   return pairs
-  # end
 end
