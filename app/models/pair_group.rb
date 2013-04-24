@@ -36,7 +36,7 @@ class PairGroup
       pair = Pair.make_pair(person_1, person_2)
       others = self.generate(people - pair.to_a)
       others.each do |rest|
-        rest.pairs << pair
+        rest.pairs.unshift pair
         pair_groups << rest
       end
     end

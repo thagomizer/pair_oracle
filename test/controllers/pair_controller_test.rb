@@ -32,8 +32,8 @@ class PairControllerTest < ActionController::TestCase
     assert_equal 3, assigns(:pair_groups).length
 
     body = response.body
-    assert body.include?("Wilma, Barney &amp; Fred")
-    assert body.include?("Barney, Wilma &amp; Fred")
-    assert body.include?("Fred, Wilma &amp; Barney")
+    assert body.include?("Barney &amp; Fred, Wilma")
+    assert body.include?("Wilma &amp; Fred, Barney")
+    assert body.include?("Wilma &amp; Barney, Fred")
   end
 end
