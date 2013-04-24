@@ -5,7 +5,8 @@ class PairController < ApplicationController
 
   def generate
     ids = params["people"]["ids"]
+    people = ids.map { |id| Person.find(id) }
 
-    @pairs = Pair.generate(ids)
+    @pair_groups = PairGroup.generate(people)
   end
 end
