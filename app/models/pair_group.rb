@@ -1,5 +1,6 @@
 class PairGroup
   include ActiveModel::AttributeMethods
+  include Enumerable
 
   attr_accessor :pairs
   define_attribute_methods ['pairs']
@@ -54,5 +55,11 @@ class PairGroup
     end
 
     return pair_groups
+  end
+
+  def each(&block)
+    self.pairs.each do |pair|
+      yield pair
+    end
   end
 end
