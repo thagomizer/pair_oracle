@@ -16,13 +16,10 @@ class PairControllerTest < ActionController::TestCase
       assert response.body.include? person.name
     end
 
-    # There needs to be a form
     assert_select "form", 1
 
-    # With a checkbox for each person
     assert_select "input#people_ids_", Person.count
 
-    # And a submit button
     assert_select "input[type='submit']"
   end
 
@@ -35,6 +32,19 @@ class PairControllerTest < ActionController::TestCase
     assert body.include?("Barney &amp; Fred, Wilma")
     assert body.include?("Wilma &amp; Fred, Barney")
     assert body.include?("Wilma &amp; Barney, Fred")
+  end
+
+  def test_generate_scores_the_pairs
+    Pair.make_pair(@wilma, @fred).save!
+    Pair.make_pair(@wilma, @fred).save!
+    Pair.make_pair(@wilma, @barney).save!
+
+    post :generate, "people" => {"ids" => [@wilma, @fred, @barney].map(&:id)}
+
+    pair_groups = assigns(:pair_groups)
+    assert_equal Pair.make_pair(@barney, @fred), pair_groups[0][0]
+    assert_equal Pair.make_pair(@wilma, @barney), pair_groups[1][0]
+    assert_equal Pair.make_pair(@wilma, @fred), pair_groups[2][0]
   end
 
   def test_save

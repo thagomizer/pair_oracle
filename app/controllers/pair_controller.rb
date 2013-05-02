@@ -8,6 +8,7 @@ class PairController < ApplicationController
     people = ids.map { |id| Person.find(id) }
 
     @pair_groups = PairGroup.generate(people)
+    @pair_groups.sort_by! { |pg| TotalPairingsScorer.score(pg) }.reverse
   end
 
   def save
