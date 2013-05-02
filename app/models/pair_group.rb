@@ -21,6 +21,10 @@ class PairGroup
     self.pairs.map(&:save).all?
   end
 
+  def [](key)
+    self.pairs[key]
+  end
+
   def self.from_ids(ids)
     pg = PairGroup.new
 

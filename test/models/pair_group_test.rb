@@ -90,4 +90,10 @@ class PairGroupTest < ActiveSupport::TestCase
     assert_equal @wilma, pair_2.person_1
     assert_nil pair_2.person_2
   end
+
+  def test_square_bracket
+    pg = PairGroup.from_ids [@fred, @barney, @wilma].map(&:id)
+
+    assert_instance_of(Pair, pg[0])
+  end
 end
