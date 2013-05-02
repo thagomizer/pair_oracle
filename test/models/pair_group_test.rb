@@ -62,7 +62,7 @@ class PairGroupTest < ActiveSupport::TestCase
   end
 
   def test_from_ids
-    pg = PairGroup.from_ids([@fred, @barney, @wilma].map(&:id))
+    pg = PairGroup.from_ids [@fred, @barney, @wilma].map(&:id)
 
     assert_equal 2, pg.pairs.length
     p1 = pg.pairs[0]
@@ -75,7 +75,7 @@ class PairGroupTest < ActiveSupport::TestCase
   end
 
   def test_save
-    pg = PairGroup.from_ids([@fred, @barney, @wilma].map(&:id))
+    pg = PairGroup.from_ids [@fred, @barney, @wilma].map(&:id)
 
     assert_difference 'Pair.count', 2 do
       pg.save
